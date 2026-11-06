@@ -1,6 +1,6 @@
 # Cyber Awareness Lab
 
-A free, static website for teaching students (16–18) to recognize phishing and
+A free, static website for teaching students to recognize phishing and
 social-engineering tricks — built as plain HTML/CSS/JS so it can be hosted for
 free on GitHub Pages or Azure Static Web Apps.
 
