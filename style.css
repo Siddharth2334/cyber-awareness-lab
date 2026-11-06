@@ -1,0 +1,228 @@
+:root {
+  --bg: #0f1419;
+  --card: #1a2332;
+  --accent: #00c2a8;
+  --danger: #ff5c5c;
+  --warn: #ffb020;
+  --text: #e8edf2;
+  --muted: #8a97a8;
+  --border: #2a3645;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.banner-training {
+  background: var(--warn);
+  color: #1a1400;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+header.site {
+  text-align: center;
+  margin: 28px 0 36px;
+}
+
+header.site h1 {
+  font-size: 28px;
+  margin: 0 0 6px;
+}
+
+header.site p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.module-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .module-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.module-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px;
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.module-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.module-card h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  color: var(--accent);
+}
+
+.module-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #06231f;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover { opacity: 0.9; }
+
+.btn.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #0c1118;
+  color: var(--text);
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.flag-list li { margin-bottom: 8px; }
+
+.reveal-box {
+  display: none;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 18px;
+  background: #0c1f1c;
+}
+
+.reveal-box.show { display: block; }
+
+.reveal-box h3 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-link:hover { color: var(--accent); }
+
+.score-bar {
+  background: #0c1118;
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+  margin: 10px 0 20px;
+  border: 1px solid var(--border);
+}
+.score-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.mock-shot {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  background: #0c1118;
+  margin-bottom: 16px;
+}
+
+.flag-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #0c1118;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.flag-option:hover { border-color: var(--accent); }
+.flag-option.correct { border-color: var(--accent); background: #0c241f; }
+.flag-option.incorrect { border-color: var(--danger); background: #2a1414; }
+
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--border);
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+footer.site {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 40px;
+}

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2 — Spot the Phish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to Cyber Awareness Lab</a>
+
+    <header class="site">
+      <h1>🎣 Spot the Phish</h1>
+      <p>Every screen below is a fictional mockup (fake brand names, no real companies). Find the red flag in each before time runs out on your attention span!</p>
+    </header>
+
+    <div id="quiz-area"></div>
+  </div>
+
+  <footer class="site">
+    All brands, names, and screens shown are fictional and for training purposes only.
+  </footer>
+
+<script>
+const QUESTIONS = [
+  {
+    title: "Wifi Login — \"NorthPark Mall Free Wifi\"",
+    mock: `
+      <div class="mock-shot">
+        <span class="badge">Simulated screen</span>
+        <p style="margin:0 0 10px;"><strong>📶 NorthPark Mall Free Wifi</strong></p>
+        <p style="color:var(--muted); font-size:13px;">To connect, verify your identity using your <strong>Google or school account password</strong>.</p>
+        <label>Email</label>
+        <input type="text" disabled placeholder="you@school.edu">
+        <label>Password</label>
+        <input type="password" disabled placeholder="••••••••">
+      </div>`,
+    options: [
+      "The mall logo isn't shown",
+      "It asks for your Google/school account password to access wifi",
+      "The page uses a password field at all",
+      "It's asking for an email address"
+    ],
+    correct: 1,
+    explain: "Wifi access never legitimately requires the password to your school, Google, or email account. Any portal asking for that is trying to steal real account credentials, not connect you to wifi."
+  },
+  {
+    title: "Text Message Alert",
+    mock: `
+      <div class="mock-shot">
+        <span class="badge">Simulated screen</span>
+        <p style="margin:0;">📱 <strong>SMS from "StreamFlix-Support"</strong></p>
+        <p style="color:var(--muted); font-size:14px; margin-top:8px;">
+          "Your account will be suspended in 1 hour. Confirm your password now at streamf1ix-verify.com to keep your subscription."
+        </p>
+      </div>`,
+    options: [
+      "The message is in English",
+      "It mentions a subscription service",
+      "Urgency + a lookalike domain (streamf1ix-verify.com) asking you to 'confirm your password'",
+      "It was sent as a text, not an email"
+    ],
+    correct: 2,
+    explain: "The domain swaps a letter 'i' for the number '1' — a classic lookalike trick. Combined with a tight deadline and a direct request to 'confirm your password,' this is textbook phishing."
+  },
+  {
+    title: "Pop-up on a School Computer",
+    mock: `
+      <div class="mock-shot">
+        <span class="badge">Simulated screen</span>
+        <p style="margin:0;">🖥️ <strong>SYSTEM ALERT</strong></p>
+        <p style="color:var(--muted); font-size:14px; margin-top:8px;">
+          "Your device has 3 viruses! Click here and enter your admin password to run a free cleanup now."
+        </p>
+      </div>`,
+    options: [
+      "The alert uses a red color",
+      "It claims infections and asks you to enter a password to 'fix' it immediately",
+      "It appeared as a pop-up",
+      "It offers a free service"
+    ],
+    correct: 1,
+    explain: "Fear-based pop-ups that demand a password to 'fix' a problem are a common malware/phishing tactic. Legitimate antivirus tools don't ask for your login password to scan a device."
+  },
+  {
+    title: "Social Media DM",
+    mock: `
+      <div class="mock-shot">
+        <span class="badge">Simulated screen</span>
+        <p style="margin:0;">💬 DM from "insta_support_help"</p>
+        <p style="color:var(--muted); font-size:14px; margin-top:8px;">
+          "Hey! We noticed suspicious login activity. Reply with your current password so we can verify it's really you and lock your account from hackers."
+        </p>
+      </div>`,
+    options: [
+      "The account name contains 'support'",
+      "It's a direct message, not an email",
+      "A real support account would never ask you to send your password directly",
+      "It mentions hackers"
+    ],
+    correct: 2,
+    explain: "No legitimate platform support account will ever ask you to type or send your actual password in a chat. That request alone is the giveaway, regardless of how official the sender's name looks."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function render() {
+  const area = document.getElementById('quiz-area');
+  if (current >= QUESTIONS.length) {
+    area.innerHTML = `
+      <div class="card">
+        <h2>Quiz complete 🎉</h2>
+        <p>You scored <strong>${score} / ${QUESTIONS.length}</strong>.</p>
+        <p style="color:var(--muted); font-size:14px;">
+          The common thread in every scenario: a request for a password or urgent action, dressed up as something routine.
+          Pause before you type a password anywhere you didn't go looking for yourself.
+        </p>
+        <a class="btn" href="demo-wifi.html">Revisit the Fake Wifi Demo</a>
+        <a class="btn secondary" href="index.html" style="margin-left:10px;">Back to Lab Home</a>
+      </div>`;
+    return;
+  }
+
+  const q = QUESTIONS[current];
+  answered = false;
+  const pct = Math.round((current / QUESTIONS.length) * 100);
+
+  area.innerHTML = `
+    <div class="score-bar"><div class="score-fill" style="width:${pct}%"></div></div>
+    <div class="card">
+      <span class="badge">Question ${current + 1} of ${QUESTIONS.length}</span>
+      <h2 style="margin-top:6px;">${q.title}</h2>
+      ${q.mock}
+      <p style="font-size:14px; margin-top:16px;"><strong>What's the red flag here?</strong></p>
+      <div id="options"></div>
+      <p id="explain" style="display:none; font-size:14px; color:var(--muted); margin-top:12px;"></p>
+      <div class="quiz-nav">
+        <span></span>
+        <button class="btn" id="next-btn" style="display:none;">Next →</button>
+      </div>
+    </div>`;
+
+  const optWrap = document.getElementById('options');
+  q.options.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'flag-option';
+    b.textContent = opt;
+    b.addEventListener('click', () => selectOption(i, q));
+    optWrap.appendChild(b);
+  });
+}
+
+function selectOption(i, q) {
+  if (answered) return;
+  answered = true;
+  const buttons = document.querySelectorAll('.flag-option');
+  buttons.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i) b.classList.add('incorrect');
+  });
+  if (i === q.correct) score++;
+  const explainEl = document.getElementById('explain');
+  explainEl.textContent = q.explain;
+  explainEl.style.display = 'block';
+  document.getElementById('next-btn').style.display = 'inline-block';
+  document.getElementById('next-btn').addEventListener('click', () => {
+    current++;
+    render();
+  });
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 — The Fake Wifi Portal (Training Demo)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="banner-training">
+    ⚠️ TRAINING SIMULATION — this is not real wifi. Nothing you type here is saved, logged, or sent anywhere. ⚠️
+  </div>
+
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to Cyber Awareness Lab</a>
+
+    <header class="site">
+      <h1>📶 "Free Campus Wifi" — Sign In</h1>
+      <p>This is exactly the kind of screen a scammer sets up near a school, café, or station. Try filling it in like a real student would.</p>
+    </header>
+
+    <div class="mock-shot">
+      <span class="badge">Simulated captive portal</span>
+      <form id="luring-form" autocomplete="off">
+        <label for="network">Connecting to network</label>
+        <input type="text" id="network" value="Student-Free-WiFi" disabled>
+
+        <label for="username">Your school email or username</label>
+        <input type="text" id="username" placeholder="e.g. j.smith2027">
+
+        <label for="password">Enter your usual account password to continue ⏰ Offer ends in 4:59!</label>
+        <input type="password" id="password" placeholder="Your normal password">
+
+        <button type="submit" class="btn" id="connect-btn">Connect to Free Wifi</button>
+      </form>
+    </div>
+
+    <div class="reveal-box" id="reveal">
+      <h3>🔍 Here's what just happened — and why it's a trap</h3>
+      <p style="color:var(--muted); font-size:14px;">
+        The moment you clicked "Connect," this page threw away whatever you typed — it was never read, stored, or sent anywhere.
+        A real attacker's page would do the opposite: quietly capture it. Here's what should have tipped you off <em>before</em> you typed anything:
+      </p>
+      <ul class="flag-list">
+        <li>🚩 <strong>No wifi network needs your account password.</strong> Real wifi logins never ask for the password you use on email, school portals, or social media. The instant a "connect to wifi" screen asks for that, it's not about wifi.</li>
+        <li>🚩 <strong>Artificial urgency.</strong> The countdown ("offer ends in 4:59!") is designed to make you rush and skip thinking.</li>
+        <li>🚩 <strong>Too-good-to-be-true free offer.</strong> "Free" is the bait; the real goal is the credentials you type.</li>
+        <li>🚩 <strong>Unverifiable network identity.</strong> Anyone can name a wifi hotspot "Student-Free-WiFi" — a name alone proves nothing about who runs it.</li>
+        <li>🚩 <strong>Re-using a real password anywhere outside the real service</strong> is the actual danger — even typing it into a fake form "just to see" can train muscle memory that makes you faster to fall for the real thing.</li>
+      </ul>
+      <p style="font-size:14px;"><strong>The rule:</strong> wifi portals should only ever ask for things like a room number, a voucher code, or an email you don't mind sharing — never a password you use elsewhere.</p>
+      <a class="btn secondary" href="quiz.html">Try the Spot-the-Phish quiz →</a>
+    </div>
+  </div>
+
+  <footer class="site">
+    This page makes no network requests and stores nothing. View source to verify — there is no backend.
+  </footer>
+
+<script>
+  // This form is intentionally inert: it never reads the typed values,
+  // never stores them (no localStorage/cookies/fetch), and never sends
+  // them anywhere. We immediately clear the fields and show the lesson.
+  document.getElementById('luring-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('reveal').classList.add('show');
+    document.getElementById('reveal').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
